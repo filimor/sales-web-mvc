@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SalesWebMvc.Models
 {
@@ -12,11 +11,10 @@ namespace SalesWebMvc.Models
         public int Id { get; set; }
 
         public string Name { get; set; }
-        public ICollection<Seller> Sellers { get; set; } = new List<Seller>();
+        public ICollection<Seller> Sellers { get; } = new List<Seller>();
 
         public Department()
         {
-
         }
 
         public Department(int id, string name)

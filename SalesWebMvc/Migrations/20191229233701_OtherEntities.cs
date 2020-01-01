@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace SalesWebMvc.Migrations
 {
@@ -8,7 +8,9 @@ namespace SalesWebMvc.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+#pragma warning disable CA1062 // Validate arguments of public methods
             migrationBuilder.CreateTable(
+#pragma warning restore CA1062 // Validate arguments of public methods
                 name: "Seller",
                 columns: table => new
                 {
@@ -66,7 +68,9 @@ namespace SalesWebMvc.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+#pragma warning disable CA1062 // Validate arguments of public methods
             migrationBuilder.DropTable(
+#pragma warning restore CA1062 // Validate arguments of public methods
                 name: "SalesRecord");
 
             migrationBuilder.DropTable(

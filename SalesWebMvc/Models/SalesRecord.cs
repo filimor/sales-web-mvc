@@ -1,10 +1,7 @@
 ﻿using SalesWebMvc.Models.Enums;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SalesWebMvc.Models
 {
@@ -18,12 +15,12 @@ namespace SalesWebMvc.Models
 
         [DisplayFormat(DataFormatString = "{0:F2}")]
         public double Amount { get; set; }
+
         public SaleStatus Status { get; set; }
         public Seller Seller { get; set; }
 
         public SalesRecord()
         {
-
         }
 
         public SalesRecord(int id, DateTime date, double amount, SaleStatus status, Seller seller)

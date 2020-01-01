@@ -7,7 +7,9 @@ namespace SalesWebMvc.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+#pragma warning disable CA1062 // Validate arguments of public methods
             migrationBuilder.CreateTable(
+#pragma warning restore CA1062 // Validate arguments of public methods
                 name: "Department",
                 columns: table => new
                 {
@@ -15,15 +17,14 @@ namespace SalesWebMvc.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Department", x => x.Id);
-                });
+                constraints: table => table.PrimaryKey("PK_Department", x => x.Id));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+#pragma warning disable CA1062 // Validate arguments of public methods
             migrationBuilder.DropTable(
+#pragma warning restore CA1062 // Validate arguments of public methods
                 name: "Department");
         }
     }

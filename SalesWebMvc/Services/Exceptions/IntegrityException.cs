@@ -1,15 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SalesWebMvc.Services.Exceptions
 {
-    public class IntegrityException:ApplicationException
+    public class IntegrityException : SystemException
     {
+        public IntegrityException() : base()
+        {
+        }
+
         public IntegrityException(string message) : base(message)
         {
+        }
 
+        public IntegrityException(string message, Exception innerException) : base(message, innerException)
+        {
         }
     }
 }

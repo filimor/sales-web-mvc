@@ -1,15 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SalesWebMvc.Services.Exceptions
 {
-    public class DbConcurrencyException:ApplicationException
+    public class DbConcurrencyException : SystemException
     {
+        public DbConcurrencyException()
+        {
+        }
+
         public DbConcurrencyException(string message) : base(message)
         {
+        }
 
+        public DbConcurrencyException(string message, Exception innerException) : base(message, innerException)
+        {
         }
     }
 }

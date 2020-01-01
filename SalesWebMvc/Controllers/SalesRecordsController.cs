@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using SalesWebMvc.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using SalesWebMvc.Services;
+using System.Globalization;
 
 namespace SalesWebMvc.Controllers
 {
@@ -32,9 +33,10 @@ namespace SalesWebMvc.Controllers
                 maxDate = DateTime.Now;
             }
 
-            ViewData["minDate"] = minDate.Value.ToString("yyyy-MM-dd");
-            ViewData["maxDate"] = maxDate.Value.ToString("yyyy-MM-dd");
-            List<Models.SalesRecord> result = await _salesRecordService.FindByDateAsync(minDate, maxDate);
+            ViewData["minDate"] = minDate.Value.ToString("yyyy-MM-dd", CultureInfo.CurrentCulture);
+            ViewData["maxDate"] = maxDate.Value.ToString("yyyy-MM-dd", CultureInfo.CurrentCulture);
+            List<Models.SalesRecord> result =
+                await _salesRecordService.FindByDateAsync(minDate, maxDate).ConfigureAwait(false);
             return View(result);
         }
 
@@ -49,10 +51,10 @@ namespace SalesWebMvc.Controllers
                 maxDate = DateTime.Now;
             }
 
-            ViewData["minDate"] = minDate.Value.ToString("yyyy-MM-dd");
-            ViewData["maxDate"] = maxDate.Value.ToString("yyyy-MM-dd");
+            ViewData["minDate"] = minDate.Value.ToString("yyyy-MM-dd", CultureInfo.CurrentCulture);
+            ViewData["maxDate"] = maxDate.Value.ToString("yyyy-MM-dd", CultureInfo.CurrentCulture);
             List<IGrouping<Models.Department, Models.SalesRecord>> result =
-                await _salesRecordService.FindByDateGroupingAsync(minDate, maxDate);
+                await _salesRecordService.FindByDateGroupingAsync(minDate, maxDate).ConfigureAwait(false);
             return View(result);
         }
     }

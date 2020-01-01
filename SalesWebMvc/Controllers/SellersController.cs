@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SalesWebMvc.Models;
 using SalesWebMvc.Models.ViewModels;
 using SalesWebMvc.Services;
 using SalesWebMvc.Services.Exceptions;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace SalesWebMvc.Controllers
 {
@@ -24,13 +23,13 @@ namespace SalesWebMvc.Controllers
 
         public async Task<IActionResult> Index()
         {
-            List<Models.Seller> list = await _sellerService.FindAllAsync();
+            List<Models.Seller> list = await _sellerService.FindAllAsync().ConfigureAwait(false);
             return View(list);
         }
 
         public async Task<IActionResult> Create()
         {
-            List<Department> departments = await _departmentService.FindAllAsync();
+            List<Department> departments = await _departmentService.FindAllAsync().ConfigureAwait(false);
             var viewModel = new SellerFormViewModel { Departments = departments };
             return View(viewModel);
         }
@@ -41,12 +40,12 @@ namespace SalesWebMvc.Controllers
         {
             if (!ModelState.IsValid)
             {
-                List<Department> departments = await _departmentService.FindAllAsync();
+                List<Department> departments = await _departmentService.FindAllAsync().ConfigureAwait(false);
                 var viewModel = new SellerFormViewModel { Seller = seller, Departments = departments };
                 return View(viewModel);
             }
 
-            await _sellerService.InsertAsync(seller);
+            await _sellerService.InsertAsync(seller).ConfigureAwait(false);
             return RedirectToAction(nameof(Index));
         }
 
@@ -57,7 +56,7 @@ namespace SalesWebMvc.Controllers
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
 
-            Seller obj = await _sellerService.FindByIdAsync(id.Value);
+            Seller obj = await _sellerService.FindByIdAsync(id.Value).ConfigureAwait(false);
             return obj == null ?
                 RedirectToAction(nameof(Error), new { message = "Id not found" }) :
                 (IActionResult)View(obj);
@@ -69,7 +68,7 @@ namespace SalesWebMvc.Controllers
         {
             try
             {
-                await _sellerService.RemoveAsync(id);
+                await _sellerService.RemoveAsync(id).ConfigureAwait(false);
                 return RedirectToAction(nameof(Index));
             }
             catch (IntegrityException e)
@@ -85,7 +84,7 @@ namespace SalesWebMvc.Controllers
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
 
-            Seller obj = await _sellerService.FindByIdAsync(id.Value);
+            Seller obj = await _sellerService.FindByIdAsync(id.Value).ConfigureAwait(false);
             return obj == null ?
                 RedirectToAction(nameof(Error), new { message = "Id not found" }) :
                 (IActionResult)View(obj);
@@ -98,13 +97,13 @@ namespace SalesWebMvc.Controllers
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
 
-            Seller obj = await _sellerService.FindByIdAsync(id.Value);
-            if(obj == null)
+            Seller obj = await _sellerService.FindByIdAsync(id.Value).ConfigureAwait(false);
+            if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
 
-            List<Department> departments = await _departmentService.FindAllAsync();
+            List<Department> departments = await _departmentService.FindAllAsync().ConfigureAwait(false);
             var viewModel = new SellerFormViewModel { Seller = obj, Departments = departments };
             return View(viewModel);
         }
@@ -115,18 +114,18 @@ namespace SalesWebMvc.Controllers
         {
             if (!ModelState.IsValid)
             {
-                List<Department> departments = await _departmentService.FindAllAsync();
+                List<Department> departments = await _departmentService.FindAllAsync().ConfigureAwait(false);
                 var viewModel = new SellerFormViewModel { Seller = seller, Departments = departments };
                 return View(viewModel);
             }
-            if (id != seller.Id)
+            if (seller is null || id != seller.Id)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id mismatch" });
             }
 
             try
             {
-                await _sellerService.UpdateAsync(seller);
+                await _sellerService.UpdateAsync(seller).ConfigureAwait(false);
             }
             catch (ApplicationException e)
             {
